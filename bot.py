@@ -23,5 +23,5 @@ while True:
     nouns_list = get_nouns(nouns_file)
     for noun in nouns_list:
         api.update_status('#The' + noun)
-		time.sleep(14400)
+        time.sleep(14400)
     break
