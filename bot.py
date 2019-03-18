@@ -41,6 +41,6 @@ while True:
             api.update_status('#The' + noun)
             update_used(used_nouns_f, noun)
             used_map = get_used_map(used_nouns_f)
-            time.sleep(14400)
+            time.sleep(7200)
     print('Nouns list completed')
     break
