@@ -21,9 +21,13 @@ def get_nouns(nouns_file):
 
 while True:
     nouns_list = get_nouns(nouns_file)
+    last_noun = ' '
     for noun in nouns_list:
-        print('Sending out tweet')
-        api.update_status('#The' + noun)
-        time.sleep(14400)
+        noun = noun.lower()
+        if not (last_noun in noun):
+            print('Sending out tweet')
+            api.update_status('#The' + noun)
+            last_noun = noun
+            time.sleep(14400)
     print('Nouns list completed')
     break
