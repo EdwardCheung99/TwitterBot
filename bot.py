@@ -22,6 +22,8 @@ def get_nouns(nouns_file):
 while True:
     nouns_list = get_nouns(nouns_file)
     for noun in nouns_list:
+        print('Sending out tweet')
         api.update_status('#The' + noun)
         time.sleep(14400)
+    print('Nouns list completed')
     break
