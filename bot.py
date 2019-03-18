@@ -11,6 +11,7 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
 nouns_file = 'nouns.txt'
+used_nouns_f = 'usednouns.txt'
 
 def get_nouns(nouns_file):
     nouns_f = open(nouns_file, 'r')
@@ -19,14 +20,27 @@ def get_nouns(nouns_file):
     nouns_f.close()
     return nouns_list
 
+def update_used(used_nouns_f, curr_noun):
+    used_f = open(used_nouns_f, 'a')
+    used_f.write(curr_noun + '\n')
+
+def get_used_map(used_nouns_f):
+    used_f = open(used_nouns_f, 'r')
+    used_map = {}
+    for line in used_f:
+        used_map[line.strip()] = True
+    return used_map
+
 while True:
     nouns_list = get_nouns(nouns_file)
-    last_noun = ' '
+    used_map = get_used_map(used_nouns_f)
     for noun in nouns_list:
         noun = noun.lower()
-        if not (last_noun in noun):
-            print('Sending out tweet')
+        if (noun not in used_map.keys()):
+            print('Sending out tweet for ' + noun)
             api.update_status('#The' + noun)
+            update_used(used_nouns_f, noun)
+            used_map = get_used_map(used_nouns_f)
             last_noun = noun
             time.sleep(14400)
     print('Nouns list completed')
